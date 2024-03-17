@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Pokemon</h1>
+    <input type="text" id="pokemon-name" placeholder="Entrer un nom de Pokemon">
+    <button onclick="searchPokemon()">Search</button>
+    <div id="pokemon"></div>
+    <script>
+        function fetchPokemon(pokemon) {
+            return fetch('https://pokeapi.co/api/v2/pokemon/' + pokemon)
+            .then((response) => response.json())
+        }  
+
+        async function displaypokemon(pokemon) {
+            const data = await fetchPokemon(pokemon)
+            document.querySelector('#pokemon').innerHTML =`
+            <h1>${data.name}</h1>
+            <img src="${data.sprites.front_default}" alt=${data.name}>
+            `
+        }
+
+        function searchPokemon() {
+            const pokemonName = document.getElementById("pokemon-name").value.toLowerCase();
+            displaypokemon(pokemonName);
+        }
+    </script>
+</body>
+</html>
